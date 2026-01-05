@@ -131,4 +131,47 @@ const translations = {
     alt: "Русский"
   },
   en: {
-    h1: "About — (Simple Sandbox: Reborn Reloaded/Ekrapina Sandbox) and Turtle Games/Team
+    h1: "About — (Simple Sandbox: Reborn Reloaded/Ekrapina Sandbox) and Turtle Games/Team",
+    p1: "What is SSB:RR, and why did we abandon the old name?",
+    p2: "Simple Sandbox: Reborn Reloaded is a fork continuation of the Simple Sandbox: Reborn project, which was developed from September 17, 2024 to June 26, 2025, and later was abandoned by the author for obvious reasons: first, his parents wanted to take the laptop, second, he got tired. Later this developer released all the source code. However, not everything is so rosy, entering uncle's house... We were just shocked by the renovation there\"))))",
+    p3: "And already on July 19, 2024, we began to put our own things in order. Oh, and we have seen bugs and solutions made by some autistic person... We had to redo more than one system for stable gameplay. Nevertheless, unlike the predecessor, game development continues at full speed.",
+    p4: "A few words about Simple Sandbox: Classic — we do not claim copyright, we were just inspired by the idea of remaking the classic version, since it had its own atmosphere. The game is just a continuation of the fan remake that was abandoned. We are not part of Madness Games and we respect their work.",
+    p5: "The idea of the remake is to add not only our own ideas but also to bring back multiplayer and implement our own solutions. Ekrapina Sandbox is not and will not be a commercial game. Donations will be available solely as charity for promoting the game, not for 'profit'!",
+    p5_1: "Why did we rebrand the project? We would have been happy to keep the old name and avatar, but that would have fallen under copyright infringement and prevented us from promoting the game on various platforms.",
+    p6: "About Turtle Games/Team:",
+    p7: "Turtle Team is a union of officially two people and unofficially those who help us. Our logo was developed based on one of the Python Turtle icons, and also because the main developer 'ИС-4' loves turtles! ❤ The original project name of SSB:RR was Simple Sandbox: Reborn Turtle Edition, but the concept of turtles moved to our union. To be closer to the original project, the developer Mister Sasha (Alexander) proposed adding a second letter R, which means 'project reboot', only done properly.",
+    p8: "Developers:",
+    p9: "Chief developer and initiator of development - ИС-4",
+    p10: "Designer, moral engine, and deputy - Alexander",
+    p11: "The right branch was formed from crazy ideas and the last personal conflict with the lead developer.",
+    p12: "We reconciled and are now cooperating, but we split the projects according to our directions: the ESB project continued down the path of creating the game, while I took a more creative approach promoting open source.",
+    flag: "images/flag_us.png",
+    alt: "English"
+  }
+};
+
+function applyLanguage() {
+  document.getElementById("h1-title").childNodes[0].nodeValue = translations[lang].h1 + " ";
+  for (let i = 1; i <= 10; i++) {
+    const el = document.getElementById("p" + i);
+    if (el) el.textContent = translations[lang]["p" + i];
+  }
+  const elBrand = document.getElementById("p5_1");
+  if (elBrand) elBrand.textContent = translations[lang]["p5_1"];
+
+  const img = langBtn.querySelector("img");
+  img.src = translations[lang].flag;
+  img.alt = translations[lang].alt;
+  localStorage.setItem("lang", lang);
+}
+
+langBtn.addEventListener("click", () => {
+  lang = lang === "ru" ? "en" : "ru";
+  applyLanguage();
+});
+
+applyLanguage();
+</script>
+
+</body>
+</html>
