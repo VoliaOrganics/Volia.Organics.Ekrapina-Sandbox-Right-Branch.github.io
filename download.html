@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download APK | ESB</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Верхнее голубое поле — панель */
+.header {
+  position: relative;
+  background: DodgerBlue;
+  color: white;
+  text-align: center;
+  padding: 12px 50px 12px 12px;
+  font-size: 1.3em;
+  line-height: 40px;
+  box-sizing: border-box;
+}
+
+/* Флаг локализации */
+.lang-btn {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.2);
+  border: 1px solid white;
+  border-radius: 6px;
+  padding: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.lang-btn img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 4px;
+  transition: transform 0.3s;
+}
+.lang-btn img:hover { transform: scale(1.1); }
+
+/* Таблица */
+table {
+  width: 98%;
+  max-width: 600px;
+  margin: 12px auto;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+}
+th, td { border: 1px solid #ddd; padding: 6px; text-align: center; }
+th { background: #222; color: white; }
+tr:hover { background: #f1f1f1; }
+
+.icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.download-btn {
+  padding: 5px 0;
+  background: DodgerBlue;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+.download-btn:hover { background: RoyalBlue; }
+
+.drive-text {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.drive-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 320px;
+  margin: 10px auto 25px;
+  background: #1E90FF;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+  transition: background 0.3s, transform 0.2s;
+}
+.drive-btn:hover {
+  background: #187bcd;
+  transform: translateY(-1px);
+}
+.drive-btn img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr { display: block; width: 100%; }
+  thead { display: none; }
+  tr {
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px;
+    background: #fff;
+    box-shadow: 0 0 2px rgba(0,0,0,0.1);
+    word-wrap: break-word;
+  }
+  td {
+    border: none;
+    padding: 4px 6px;
+    text-align: left;
+    position: relative;
+  }
+  td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: inline-block;
+    width: 85px;
+    vertical-align: top;
+  }
+  .icon { width: 16px; height: 16px; vertical-align: middle; }
+  .download-btn { padding: 4px 0; font-size: 12px; }
+  .drive-btn { width: 90%; font-size: 14px; gap: 8px; }
+  .drive-btn img { width: 28px; height: 28px; }
+  .header {
+    font-size: 1.1em;
+    line-height: 36px;
+    padding: 12px 60px 12px 12px;
+  }
+  .lang-btn img { width: 28px; height: 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  Скачать — Ekrapina Sandbox
+  <button class="lang-btn" id="lang-toggle">
+    <img src="images/flag_ru.png" alt="Русский">
+  </button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Upload date</th>
+      <th>Platform</th>
+      <th>Download</th>
+    </tr>
+  </thead>
+  <tbody id="apk-list"></tbody>
+</table>
+
+<div class="drive-text">Не нашли старые версии?</div>
+<a href="https://drive.google.com/drive/folders/1vKNeh_uiTHlb0bRFElCNrWtdJy6Spxtp?usp=drive_link" target="_blank" class="drive-btn">
+  <img src="images/drive.png" alt="Drive">
+  <span>Скачать старые версии из Google Drive</span>
+</a>
+
+<script>
+const repoOwner = "TurtleTeam-Ekrapina-Sandbox";
+const repoName = "TurtleTeam-Ekrapina-Sandbox.github.io";
+
+async function fetchReleases() {
+  const apiURL = `https://api.github.com/repos/${repoOwner}/${repoName}/releases`;
+  try {
+    const response = await fetch(apiURL);
+    if (!response.ok) throw new Error(`GitHub API error: ${response.status}`);
+    const releases = await response.json();
+
+    const tbody = document.getElementById("apk-list");
+    tbody.innerHTML = "";
+
+    releases.forEach(release => {
+      release.assets.forEach(asset => {
+        const fileName = asset.name.toLowerCase();
+        const date = new Date(asset.updated_at).toLocaleDateString("ru-RU", {
+          day: "numeric", month: "long", year: "numeric"
+        });
+
+        let iconSrc = "images/unknown.png";
+        if (fileName.endsWith(".apk")) iconSrc = "images/android.png";
+        else if (fileName.endsWith(".zip")) iconSrc = "images/windows.png";
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td data-label="File">${asset.name}</td>
+          <td data-label="Upload date">${date}</td>
+          <td data-label="Platform"><img src="${iconSrc}" alt="Платформа" class="icon"></td>
+          <td data-label="Download"><a href="${asset.browser_download_url}" class="download-btn">Download</a></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    });
+
+    if (tbody.innerHTML === "") {
+      tbody.innerHTML = `<tr><td colspan="4">File not found</td></tr>`;
+    }
+
+  } catch (error) {
+    document.getElementById("apk-list").innerHTML =
+      `<tr><td colspan="4">Load error: ${error.message}</td></tr>`;
+  }
+}
+
+fetchReleases();
+
+// Локализация
+let lang = localStorage.getItem("lang") || "ru";
+const langBtn = document.getElementById("lang-toggle");
+
+const text = {
+  ru: {
+    h1: "Скачать — Ekrapina Sandbox",
+    driveText: "Не нашли старые версии?",
+    driveBtn: "Скачать старые версии из Google Drive",
+    flag: "images/flag_ru.png",
+    alt: "Русский"
+  },
+  en: {
+    h1: "Download — Ekrapina Sandbox",
+    driveText: "Can't find old versions?",
+    driveBtn: "Download old versions from Google Drive",
+    flag: "images/flag_us.png",
+    alt: "English"
+  }
+};
+
+function applyLanguage() {
+  document.querySelector(".header").childNodes[0].nodeValue = text[lang].h1;
+  document.querySelector(".drive-text").textContent = text[lang].driveText;
+  document.querySelector(".drive-btn span").textContent = text[lang].driveBtn;
+  const img = langBtn.querySelector("img");
+  img.src = text[lang].flag;
+  img.alt = text[lang].alt;
+  localStorage.setItem("lang", lang);
+}
+
+langBtn.addEventListener("click", () => {
+  lang = lang === "ru" ? "en" : "ru";
+  applyLanguage();
+});
+
+applyLanguage();
+</script>
+
+</body>
+</html>
+
+

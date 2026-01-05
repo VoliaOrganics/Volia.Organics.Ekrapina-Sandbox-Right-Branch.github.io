@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESB | Turtle Team</title>
+  <style>
+    body, html { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    .hero {
+      background-color: DodgerBlue;
+      color: white;
+      height: 50vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+      position: relative;
+    }
+    h1 { font-size: 2em; margin: 0; }
+
+    .lang-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lang-btn img {
+      width: 74px;
+      height: 74px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid white; /* рамка добавлена */
+      transition: transform 0.3s ease;
+    }
+    .lang-btn img:hover { transform: scale(1.05); }
+
+    .buttons { margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    .buttons img { width: 150px; max-width: 45vw; cursor: pointer; }
+    .content { padding: 20px; max-width: 800px; margin: 0 auto; text-align: center; }
+    img { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+    .telegram-link {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-style: italic;
+      font-weight: bold;
+      color: white;
+      background-color: #222;
+      padding: 10px 20px;
+      border-radius: 8px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .telegram-link img { width: 40px; height: 40px; }
+    .telegram-link a { text-decoration: none; color: white; }
+    .telegram-link a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5em; }
+      .buttons img { width: 120px; }
+      .telegram-link { font-size: 16px; padding: 8px 16px; }
+      .lang-btn img { 
+        width: 64px; 
+        height: 64px; 
+        border: 2px solid white; /* рамка сохраняется на мобилках */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <button class="lang-btn" id="lang-toggle">
+      <img src="images/flag_ru.png" alt="Русский">
+    </button>
+    <h1 id="title">Официальный сайт Ekrapina Sandbox</h1>
+  </div>
+
+  <div class="content">
+    <figure>
+      <img src="images/ssbrricon.png" alt="Логотип SSB:RR">
+      <figcaption id="caption">Загрузить APK файл, и больше о Turtle Team.</figcaption>
+    </figure>
+
+    <div class="buttons">
+      <a href="download.html">
+        <img src="images/download.png" alt="Download">
+      </a>
+      <a href="about.html">
+        <img src="images/turtle_team.webp" alt="AboutTurtleTeam">
+      </a>
+    </div>
+
+    <p id="description">
+      Сайт посвящается самому удачному форк-проекту от команды Turtle Team на основе Simple Sandbox:Reborn, который представляет собой ремейк песочницы Simple Sandbox:Classic
+      с внедрёнными нововведениями. Наш проект всё больше и больше отдаляется от предка тем, что мы исправляем ошибки старого недо-разработчика (Боба) и выводим проект на новый уровень.
+    </p>
+
+    <div class="telegram-link">
+      <img src="images/telegram.png" alt="Telegram">
+      <a id="telegram-text" href="https://t.me/Ekrapina_Sandbox" target="_blank">— Ekrapina Sandbox Telegram</a>
+    </div>
+  </div>
+
+  <script>
+    const langBtn = document.getElementById("lang-toggle");
+
+    const text = {
+      ru: {
+        title: "Официальный сайт Ekrapina Sandbox",
+        caption: "Загрузить APK файл, и больше о Turtle Team.",
+        description:
+          "Сайт посвящается самому удачному форк-проекту от команды Turtle Team на основе Simple Sandbox:Reborn, который представляет собой ремейк песочницы Simple Sandbox:Classic с внедрёнными нововведениями. Наш проект всё больше и больше отдаляется от предка тем, что мы исправляем ошибки старого недо-разработчика (Боба) и выводим проект на новый уровень.",
+        telegram: "— Ekrapina Sandbox Telegram",
+        flag: "images/flag_ru.png",
+        alt: "Русский",
+      },
+      en: {
+        title: "Official website of Ekrapina Sandbox",
+        caption: "Download the APK file and learn more about Turtle Team.",
+        description:
+          "This website is dedicated to the most successful fork project by the Turtle Team based on Simple Sandbox:Reborn, which is a remake of Simple Sandbox:Classic with implemented improvements. Our project increasingly diverges from its predecessor, as we fix the mistakes of the former under-developer (Bob) and bring the project to a new level.",
+        telegram: "— Ekrapina Sandbox Telegram",
+        flag: "images/flag_us.png",
+        alt: "English",
+      },
+    };
+
+    function applyLang(lang) {
+      document.getElementById("title").textContent = text[lang].title;
+      document.getElementById("caption").textContent = text[lang].caption;
+      document.getElementById("description").textContent = text[lang].description;
+      document.getElementById("telegram-text").textContent = text[lang].telegram;
+      langBtn.querySelector("img").src = text[lang].flag;
+      langBtn.querySelector("img").alt = text[lang].alt;
+    }
+
+    let lang = localStorage.getItem("lang") || "ru";
+    applyLang(lang);
+
+    langBtn.addEventListener("click", () => {
+      lang = lang === "ru" ? "en" : "ru";
+      localStorage.setItem("lang", lang);
+      applyLang(lang);
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+

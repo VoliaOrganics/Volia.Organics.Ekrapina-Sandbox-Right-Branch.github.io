@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About project | ESB</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url("images/sky.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Верхняя чёрная панель */
+h1 {
+  text-align: center;
+  padding: 20px 80px 20px 20px;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  margin: 0;
+  position: relative;
+  box-sizing: border-box;
+  line-height: 64px;
+}
+
+/* Флаг на панели */
+.lang-btn {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 10px;
+  padding: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.3s;
+}
+
+.lang-btn:hover { background: rgba(255,255,255,0.25); }
+
+.lang-btn img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid white;
+  transition: transform 0.3s ease;
+}
+
+.lang-btn img:hover { transform: scale(1.05); }
+
+/* Контейнер текста */
+.container {
+  width: 90%;
+  max-width: 1000px; /* чуть больше для длинных текстов */
+  margin: 40px auto;
+  padding: 25px;
+  background: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  line-height: 1.7;
+  border: 2px solid #ddd;
+  white-space: pre-line; /* поддержка длинных абзацев */
+}
+
+/* Мобильная адаптация */
+@media (max-width: 600px) {
+  .container { padding: 15px; margin: 20px auto; }
+  h1 { font-size: 1.5em; padding: 15px 70px 15px 15px; line-height: 50px; }
+  .lang-btn img { width: 48px; height: 48px; border: 2px solid white; }
+  .lang-btn { right: 10px; border-radius: 8px; }
+}
+</style>
+</head>
+<body>
+
+<h1 id="h1-title">
+  О проекте — Simple Sandbox: Reborn Reloaded и Turtle Games/Team
+  <button class="lang-btn" id="lang-toggle">
+    <img src="images/flag_ru.png" alt="Русский">
+  </button>
+</h1>
+
+<div class="container">
+  <p id="p1">Что такое SSB:RR, и почему мы отказались от старого названия?</p>
+  <p id="p2">(Simple Sandbox: Reborn Reloaded / Ekrapina Sandbox) является форк-продолжением проекта Simple Sandbox: Reborn...</p>
+  <p id="p3">И уже 19 июля 2024 года мы начали наводить свои порядки...</p>
+  <p id="p4">Немного слов о Simple Sandbox: Classic — мы не присваиваем авторские права...</p>
+  <p id="p5">Идея ремейка заключается в том, чтобы добавить не только свои идеи...</p>
+
+  <!-- Новый раздел -->
+  <p id="p5_1">Почему мы провели ребрендинг проекта? Мы бы всей душой были бы рады, если бы у нас была возможность оставить старое название и аватарку, но это бы попадало под авторские права и не дало бы нам дальше продвигать игру на разных площадках.</p>
+
+  <p id="p6">О Turtle Games/Team:</p>
+  <p id="p7">Turtle Team представляет собой объединение из официально двух человек...</p>
+  <p id="p8">Разработчики:</p>
+  <p id="p9">Главный разраб и инициатор разработки — ИС-4</p>
+  <p id="p10">Дизайнер, моральный двигатель и заместитель — Александр</p>
+</div>
+
+<script>
+const langBtn = document.getElementById("lang-toggle");
+let lang = localStorage.getItem("lang") || "ru";
+
+const translations = {
+  ru: {
+    h1: "О проекте — (Simple Sandbox: Reborn Reloaded/Ekrapina Sandbox) и Turtle Games/Team",
+    p1: "Что такое SSB:RR, и почему мы отказались от старого названия?",
+    p2: "(Simple Sandbox: Reborn Reloaded/Ekrapina Sandbox) является форк продолжением проекта Simple Sandbox: Reborn, который разрабатывался с 17 сентября 2024 года до 26 июня 2025 года, а после был заброшен автором по очевидным причинам: во-первых, у него хотели родители забрать ноутбук, во-вторых ему надоело. А позже этот разработчик слил всем исходники. Однако, не всё так радужно, зайдя в дядюшкин дом... Мы просто были в шоке от тамошнего \"ремонта\"))))",
+    p3: "И уже 19 июля 2024 года мы начали наводить свои порядки. Ох, и багов мы повидали и решений принимавшихся каким-то аутистом... Нам пришлось переработать не одну систему для стабильного игрового процесса. Тем не менее, в отличие от предка, разработка игры продолжает идти полным ходом.",
+    p4: "Немного слов о Simple Sandbox: Classic, мы не присваиваем авторские права а всего-лишь вдохнолись идеей ремейка классической версии, так как у неё была своя выраженая атмосфера. Игра всего-лишь продолжение фанатского ремейка что был заброшен, мы не являемся частью Madness Games и относимся с уважением к их труду и работе.",
+    p5: "Идея ремейка заключаеться в том, что-бы добавить не только свои идеи но и ещё вернуть мультиплеер + внедрить собвственые идеи, Ekrapina Sandbox не являеться и не будет являться комерческой, донаты будут доступны в качестве благотворительности для продвижения игры, а не \"заработка!\"",
+    p5_1: "Почему мы провели ребрендинг проекта? Мы бы всей душой были бы рады, если бы у нас была возможность оставить старое название и аватарку, но это бы попадало под авторские права и не дало бы нам дальше продвигать игру на разных площадках.",
+    p6: "О Turtle Games/Team:",
+    p7: "Turtle Team представляет собой объединение из официально двух человек и неофициально тех, кто нам помогает. Наш логотип был разработан на базе одной из иконок Python Turtle, а также потому что главный разработчик \"ИС-4\" любит черепашек! ❤ Первоначальное название проекта SSB:RR которое сменила Ekrapina Sandbox, было Simple Sandbox: Reborn Turtle Edition, но концепция черепах переехала в наше объединение. Чтобы быть ближе к оригинальному проекту, разработчик Mister Sasha (Александр) предложил добавить вторую букву R, что означает «перезагрузка проекта», только качественно сделанная.",
+    p8: "Разработчики:",
+    p9: "Главный разраб и инициатор разработки - ИС-4",
+    p10: "Дизайнер и моральный двигатель и заместитель - Александр",
+    flag: "images/flag_ru.png",
+    alt: "Русский"
+  },
+  en: {
+    h1: "About — (Simple Sandbox: Reborn Reloaded/Ekrapina Sandbox) and Turtle Games/Team",
+    p1: "What is SSB:RR, and why did we abandon the old name?",
+    p2: "Simple Sandbox: Reborn Reloaded is a fork continuation of the Simple Sandbox: Reborn project, which was developed from September 17, 2024 to June 26, 2025, and later was abandoned by the author for obvious reasons: first, his parents wanted to take the laptop, second, he got tired. Later this developer released all the source code. However, not everything is so rosy, entering uncle's house... We were just shocked by the renovation there\"))))",
+    p3: "And already on July 19, 2024, we began to put our own things in order. Oh, and we have seen bugs and solutions made by some autistic person... We had to redo more than one system for stable gameplay. Nevertheless, unlike the predecessor, game development continues at full speed.",
+    p4: "A few words about Simple Sandbox: Classic — we do not claim copyright, we were just inspired by the idea of remaking the classic version, since it had its own atmosphere. The game is just a continuation of the fan remake that was abandoned. We are not part of Madness Games and we respect their work.",
+    p5: "The idea of the remake is to add not only our own ideas but also to bring back multiplayer and implement our own solutions. Ekrapina Sandbox is not and will not be a commercial game. Donations will be available solely as charity for promoting the game, not for 'profit'!",
+    p5_1: "Why did we rebrand the project? We would have been happy to keep the old name and avatar, but that would have fallen under copyright infringement and prevented us from promoting the game on various platforms.",
+    p6: "About Turtle Games/Team:",
+    p7: "Turtle Team is a union of officially two people and unofficially those who help us. Our logo was developed based on one of the Python Turtle icons, and also because the main developer 'ИС-4' loves turtles! ❤ The original project name of SSB:RR was Simple Sandbox: Reborn Turtle Edition, but the concept of turtles moved to our union. To be closer to the original project, the developer Mister Sasha (Alexander) proposed adding a second letter R, which means 'project reboot', only done properly.",
+    p8: "Developers:",
+    p9: "Chief developer and initiator of development - ИС-4",
+    p10: "Designer, moral engine, and deputy - Alexander",
+    flag: "images/flag_us.png",
+    alt: "English"
+  }
+};
+
+function applyLanguage() {
+  document.getElementById("h1-title").childNodes[0].nodeValue = translations[lang].h1 + " ";
+  for (let i = 1; i <= 10; i++) {
+    const el = document.getElementById("p" + i);
+    if (el) el.textContent = translations[lang]["p" + i];
+  }
+  const elBrand = document.getElementById("p5_1");
+  if (elBrand) elBrand.textContent = translations[lang]["p5_1"];
+
+  const img = langBtn.querySelector("img");
+  img.src = translations[lang].flag;
+  img.alt = translations[lang].alt;
+  localStorage.setItem("lang", lang);
+}
+
+langBtn.addEventListener("click", () => {
+  lang = lang === "ru" ? "en" : "ru";
+  applyLanguage();
+});
+
+applyLanguage();
+</script>
+
+</body>
+</html>
