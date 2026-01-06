@@ -35,24 +35,14 @@ h1 {
   padding: 2px;
   cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: background 0.3s;
 }
-
-.lang-btn:hover { background: rgba(255,255,255,0.25); }
 
 .lang-btn img {
   width: 60px;
   height: 60px;
-  object-fit: cover;
   border-radius: 6px;
   border: 2px solid white;
-  transition: transform 0.3s ease;
 }
-
-.lang-btn img:hover { transform: scale(1.05); }
 
 .container {
   width: 90%;
@@ -63,13 +53,6 @@ h1 {
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   line-height: 1.7;
   border: 2px solid #ddd;
-}
-
-@media (max-width: 600px) {
-  .container { padding: 15px; margin: 20px auto; }
-  h1 { font-size: 1.5em; padding: 15px 70px 15px 15px; line-height: 50px; }
-  .lang-btn img { width: 48px; height: 48px; }
-  .lang-btn { right: 10px; border-radius: 8px; }
 }
 </style>
 </head>
@@ -94,7 +77,6 @@ h1 {
   <p id="p8"></p>
   <p id="p9"></p>
 
-  <!-- p10 разделён -->
   <p id="p10_1"></p>
   <p id="p10_2"></p>
   <p id="p10_3"></p>
@@ -105,70 +87,66 @@ const langBtn = document.getElementById("lang-toggle");
 let lang = localStorage.getItem("lang") || "ru";
 
 const translations = {
-  ru: {
-    h1: "Что из себя представляет правая ветвь, и почему проект разошелся с основным направлением?",
-    p1: "История развития проекта с самого начала по это время.",
-    p2: "(Simple Sandbox: Reborn Reloaded/Ekrapina Sandbox) является форк продолжением проекта Simple Sandbox: Reborn...",
-    p3: "И уже 19 июля 2024 года мы начали наводить свои порядки...",
-    p4: "Немного слов о Simple Sandbox: Classic...",
-    p5: "Идея ремейка заключается в том, чтобы добавить не только свои идеи...",
-    p5_1: "Почему мы провели ребрендинг проекта? Мы бы всей душой были бы рады...",
-    p6: "О Turtle Games/Team:",
-    p7: "Turtle Team представляет собой объединение...",
-    p8: "Разработчики:",
-    p9: "Главный разраб и инициатор разработки — ИС-4",
+ru: {
+h1: "Что из себя представляет правая ветвь, и почему проект разошелся с основным направлением?",
+p1: "История развития проекта с самого начала по это время.",
+p2: "(Simple Sandbox: Reborn Reloaded/Ekrapina Sandbox) является форк продолжением проекта Simple Sandbox: Reborn, который разрабатывался с 17 сентября 2024 года до 26 июня 2025 года, а после был заброшен автором по очевидным причинам: во-первых, у него хотели родители забрать ноутбук, во-вторых ему надоело. А позже этот разработчик слил всем исходники. Однако, не всё так радужно, зайдя в дядюшкин дом... Мы просто были в шоке от тамошнего \"ремонта\"))))",
+p3: "И уже 19 июля 2024 года мы начали наводить свои порядки. Ох, и багов мы повидали и решений принимавшихся каким-то аутистом... Нам пришлось переработать не одну систему для стабильного игрового процесса. Тем не менее, в отличие от предка, разработка игры продолжает идти полным ходом.",
+p4: "Немного слов о Simple Sandbox: Classic, мы не присваиваем авторские права а всего-лишь вдохнолись идеей ремейка классической версии, так как у неё была своя выраженая атмосфера. Игра всего-лишь продолжение фанатского ремейка что был заброшен, мы не являемся частью Madness Games и относимся с уважением к их труду и работе.",
+p5: "Идея ремейка заключаеться в том, что-бы добавить не только свои идеи но и ещё вернуть мультиплеер + внедрить собвственые идеи, Ekrapina Sandbox не являеться и не будет являться комерческой, донаты будут доступны в качестве благотворительности для продвижения игры, а не \"заработка!\"",
+p5_1: "Почему мы провели ребрендинг проекта? Мы бы всей душой были бы рады, если бы у нас была возможность оставить старое название и аватарку, но это бы попадало под авторские права и не дало бы нам дальше продвигать игру на разных площадках.",
+p6: "О Turtle Games/Team:",
+p7: "Turtle Team представляет собой объединение из официально двух человек и неофициально тех, кто нам помогает. Наш логотип был разработан на базе одной из иконок Python Turtle, а также потому что главный разработчик \"ИС-4\" любит черепашек! ❤ Первоначальное название проекта SSB:RR которое сменила Ekrapina Sandbox, было Simple Sandbox: Reborn Turtle Edition, но концепция черепах переехала в наше объединение. Чтобы быть ближе к оригинальному проекту, разработчик Mister Sasha (Александр) предложил добавить вторую букву R, что означает «перезагрузка проекта», только качественно сделанная.",
+p8: "Разработчики:",
+p9: "Главный разраб и инициатор разработки — ИС-4",
 
-    p10_1: "Дизайнер, моральный двигатель и заместитель — Александр (ушёл из проекта).",
-    p10_2: "Он создал правую ветвь проекта, которая образовалась из безумных идей и последнего личностного конфликта с главным разработчиком. Дата создания — 1 января 2026 года.",
-    p10_3: "Сейчас мы уже помирились и сотрудничаем, но разделили проекты по направлениям: ESB пошёл по пути создания конкретно игры, а я — по более творческому пути, продвигая open-source. Позже была создана студия Volia Organics с формальным копирайтом, не имеющим юридической ценности.",
+p10_1: "Дизайнер, моральный двигатель и заместитель — Александр(ушел из проекта, создав правую ветвь).",
+p10_2: "Правая ветвь образовалась из безумных идей, и последнего личностного конфликта с главным разработчиком ESB, дата создания - 1ое января 2026.",
+p10_3: "Сейчас мы уже помирились, и сотрудничаем но мы разделили проекты по своим направлениям, esb проект пошел дальше по пути создания конкретно игры, а я пошел по более творческому пути продвигая опенсорс, позже была созданна студия Volia Organics, за которой прикреплён формальный копирайт не имеющий юридической ценности, позволяя в полной мере творить другим людям.",
 
-    flag: "images/flag_ru.png",
-    alt: "Русский"
-  },
+flag: "images/flag_ru.png",
+alt: "Русский"
+},
 
-  en: {
-    h1: "What is the right branch, and why did the project diverge from the main direction?",
-    p1: "The history of the project's development from the very beginning to this time.",
-    p2: "Simple Sandbox: Reborn Reloaded is a fork continuation...",
-    p3: "And already on July 19, 2024, we began to put our own things in order...",
-    p4: "A few words about Simple Sandbox: Classic...",
-    p5: "The idea of the remake is to add not only our own ideas...",
-    p5_1: "Why did we rebrand the project? We would have been happy...",
-    p6: "About Turtle Games/Team:",
-    p7: "Turtle Team is a union...",
-    p8: "Developers:",
-    p9: "Chief developer and initiator of development — IS-4",
+en: {
+h1: "What is the right branch, and why did the project diverge from the main direction?",
+p1: "The history of the project's development from the very beginning to this time.",
+p2: "Simple Sandbox: Reborn Reloaded is a fork continuation of the Simple Sandbox: Reborn project, which was developed from September 17, 2024 to June 26, 2025, and later was abandoned by the author for obvious reasons: first, his parents wanted to take the laptop, second, he got tired. Later this developer released all the source code. However, not everything is so rosy, entering uncle's house... We were just shocked by the renovation there\"))))",
+p3: "And already on July 19, 2024, we began to put our own things in order. Oh, and we have seen bugs and solutions made by some autistic person... We had to redo more than one system for stable gameplay. Nevertheless, unlike the predecessor, game development continues at full speed.",
+p4: "A few words about Simple Sandbox: Classic — we do not claim copyright, we were just inspired by the idea of remaking the classic version, since it had its own atmosphere. The game is just a continuation of the fan remake that was abandoned. We are not part of Madness Games and we respect their work.",
+p5: "The idea of the remake is to add not only our own ideas but also to bring back multiplayer and implement our own solutions. Ekrapina Sandbox is not and will not be a commercial game. Donations will be available solely as charity for promoting the game, not for 'profit'!",
+p5_1: "Why did we rebrand the project? We would have been happy to keep the old name and avatar, but that would have fallen under copyright infringement and prevented us from promoting the game on various platforms.",
+p6: "About Turtle Games/Team:",
+p7: "Turtle Team is a union of officially two people and unofficially those who help us. Our logo was developed based on one of the Python Turtle icons, and also because the main developer 'ИС-4' loves turtles! ❤ The original project name of SSB:RR was Simple Sandbox: Reborn Turtle Edition, but the concept of turtles moved to our union. To be closer to the original project, the developer Mister Sasha (Alexander) proposed adding a second letter R, which means 'project reboot', only done properly.",
+p8: "Developers:",
+p9: "Chief developer and initiator of development - JS-4",
 
-    p10_1: "Designer, moral driver, and deputy — Alexander (left the project).",
-    p10_2: "He created the right branch, which emerged from radical ideas and a final personality conflict with the lead developer. Founded on January 1, 2026.",
-    p10_3: "We have since reconciled and continue to collaborate, but the projects were split by direction: ESB continued as a game-focused project, while I pursued a more creative path, promoting open source. Later, the Volia Organics studio was founded with a formal copyright of no legal value.",
+p10_1: "The designer, moral driver, and deputy - Alexander (who left the project and created the right branch).",
+p10_2: "The right branch was formed out of crazy ideas and a final personality clash with the lead developer of ESB, founded on January 1, 2026.",
+p10_3: "We've since reconciled and are collaborating, but we split the projects into different areas. The esb project moved forward with the game itself, while I pursued a more creative path, promoting open source. Later, the Volia Organics studio was founded, which holds a formal copyright with no legal value, allowing others to fully create.",
 
-    flag: "images/flag_us.png",
-    alt: "English"
-  }
+flag: "images/flag_us.png",
+alt: "English"
+}
 };
 
 function applyLanguage() {
   document.getElementById("h1-title").childNodes[0].nodeValue = translations[lang].h1 + " ";
 
   Object.keys(translations[lang]).forEach(key => {
-    if (key.startsWith("p")) {
-      const el = document.getElementById(key);
-      if (el) el.textContent = translations[lang][key];
-    }
+    const el = document.getElementById(key);
+    if (el) el.textContent = translations[lang][key];
   });
 
   const img = langBtn.querySelector("img");
   img.src = translations[lang].flag;
   img.alt = translations[lang].alt;
-
-  localStorage.setItem("lang", lang);
 }
 
-langBtn.addEventListener("click", () => {
+langBtn.onclick = () => {
   lang = lang === "ru" ? "en" : "ru";
   applyLanguage();
-});
+};
 
 applyLanguage();
 </script>
